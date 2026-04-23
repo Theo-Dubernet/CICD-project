@@ -1,0 +1,22 @@
+name: Check HTML for forbidden string
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check-html:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Check if "toto" exists in HTML
+        run: |
+          if grep -q "toto" index.html; then
+            echo "❌ La chaîne 'toto' a été trouvée"
+            exit 1
+          else
+            echo "✅ OK, rien trouvé"
+          fi
